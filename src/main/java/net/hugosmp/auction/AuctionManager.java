@@ -270,17 +270,18 @@ public final class AuctionManager {
         mc.player.networkHandler.sendChatMessage(s);
     }
 
-    private static void sound(boolean good) {
+        private static void sound(boolean good) {
         if (!HugoAuctionClient.CONFIG.sounds) return;
         MinecraftClient mc = MinecraftClient.getInstance();
-        mc.getSoundManager().play(PositionedSoundInstance.master(
-                good ? SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP : SoundEvents.ENTITY_VILLAGER_NO,
-                good ? 1.3f : 1.0f));
+        if (mc.player == null) return;
+        mc.player.playSound(good ? SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP : SoundEvents.ENTITY_VILLAGER_NO,
+                1.0f, good ? 1.3f : 1.0f);
     }
 
     private static void fanfare() {
         if (!HugoAuctionClient.CONFIG.sounds) return;
         MinecraftClient mc = MinecraftClient.getInstance();
-        mc.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1.0f));
+        if (mc.player == null) return;
+        mc.player.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f);
     }
 }
